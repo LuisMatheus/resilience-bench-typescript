@@ -1,0 +1,59 @@
+{
+  "fault": {
+    "type": "abort",
+    "percentage": [
+      50
+    ],
+    "status": 503
+  },
+  "users": [
+    1
+  ],
+  "targetUrl": "http://192.168.1.111:3000/",
+  "rounds": 10,
+  "maxRequests": 500,
+  "succRequests": 25,
+  "clientSpecs": [
+    {
+      "strategy": "baseline",
+      "platform": "nodejs",
+      "lib": "cockatiel",
+      "url": "http://192.168.1.106:3000/baseline/",
+      "patternConfig": {}
+    },
+    {
+      "strategy": "circuit_breaker_consecutive",
+      "platform": "nodejs",
+      "lib": "cockatiel",
+      "url": "http://192.168.1.106:3000/circuitbreaker/consecutive/",
+      "patternconfig": {
+        "halfopenafter": 2,
+        "exceptionsallowedbeforebreaking": 5
+      }
+    },
+    {
+      "strategy": "circuit_breaker_sampling",
+      "platform": "nodejs",
+      "lib": "cockatiel",
+      "url": "http://192.168.1.106:3000/circuitbreaker/sampling/",
+      "patternconfig": {
+        "halfopenafter": 2,
+        "threshold": 0.2,
+        "duration": 30000,
+        "minimumReps": 10
+      }
+    },
+    {
+      "strategy": "retry",
+      "platform": "nodejs",
+      "lib": "cockatiel",
+      "url": "http://192.168.1.106:3000/retry/",
+      "patternConfig": {
+        "exponent": 2,
+        "maxDelay": 30000,
+        "initialDelay": 128,
+        "maxAttemps": 3
+      }
+    }
+  ]
+}
